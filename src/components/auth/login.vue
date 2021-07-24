@@ -14,7 +14,7 @@
             :type="passwordVisible ? 'text' : 'password'"
           />
           <span class="viewPassword" @click="togglePasswordView">
-            <PasswordToggle />
+            <IconPasswordToggle />
           </span>
         </div>
       </div>
@@ -26,11 +26,11 @@
 </template>
 
 <script>
-import PasswordToggle from "./passwordToggle.vue";
+import IconPasswordToggle from "./Icon_passwordToggle.vue";
 export default {
   name: "Login",
   components: {
-    PasswordToggle,
+    IconPasswordToggle,
   },
   data() {
     return {
