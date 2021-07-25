@@ -22,9 +22,4 @@ export default {
 };
 </script>
 
-<style scoped>
-#spinner {
-  animation: rotate 1.5s infinite linear;
-  transform-origin: 50px 50px;
-}
-</style>
+<style scoped></style>

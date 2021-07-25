@@ -29,11 +29,25 @@
         </div>
         <span class="fileError">{{ form.errors.password }}</span>
       </div>
+      <div class="formItems">
+        <div class="label">Confirm Password</div>
+        <div class="passDiv">
+          <input
+            class="inputItem"
+            :type="passwordVisible2 ? 'text' : 'password'"
+            v-model="form.data.password2"
+          />
+          <span class="viewPassword" @click="togglePasswordView2">
+            <IconPasswordToggle />
+          </span>
+        </div>
+        <span class="fileError">{{ form.errors.password2 }}</span>
+      </div>
       <div v-if="!form.loading">
         <input class="submitButton" type="submit" value="Submit" />
       </div>
       <div v-else>
-        <button class="submitButton">wait ...</button>
+        <button class="submitButton"><IconLoading /></button>
       </div>
     </form>
   </div>
@@ -42,21 +56,26 @@
 <script>
 import firebase from "firebase/app";
 import "firebase/auth";
-import IconPasswordToggle from "./Icon_passwordToggle.vue";
+import IconPasswordToggle from "@/components/icons/Icon_passwordToggle.vue";
+import IconLoading from "@/components/icons/Icon_loading.vue";
+
 import { mapActions } from "vuex";
 export default {
   name: "Signup",
   components: {
     IconPasswordToggle,
+    IconLoading,
   },
   data() {
     return {
       passwordVisible: false,
+      passwordVisible2: false,
       form: {
         data: {
           name: "",
           email: "",
           password: "",
+          password2: "",
         },
         errors: {},
         loading: false,
@@ -66,6 +85,9 @@ export default {
   methods: {
     togglePasswordView() {
       this.passwordVisible = !this.passwordVisible;
+    },
+    togglePasswordView2() {
+      this.passwordVisible2 = !this.passwordVisible2;
     },
     validEmail(email) {
       var re =
@@ -92,6 +114,11 @@ export default {
           this.form.errors = {
             ...this.form.errors,
             password: "Password required.",
+          };
+        } else if (this.form.data.password !== this.form.data.password2) {
+          this.form.errors = {
+            ...this.form.errors,
+            password2: "Passwords not matched",
           };
         } else if (
           this.form.data.password.length < 6 ||
